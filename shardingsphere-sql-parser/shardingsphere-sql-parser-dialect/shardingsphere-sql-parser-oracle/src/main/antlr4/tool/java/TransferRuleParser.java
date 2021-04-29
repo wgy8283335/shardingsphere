@@ -17,14 +17,15 @@ public class TransferRuleParser extends Parser {
 		new PredictionContextCache();
 	public static final int
 		KEYWORD_=1, IDENTIFIER_=2, WS=3, FOR_GENERATOR=4, LP_=5, RP_=6, LBE_=7, 
-		RBE_=8, LBT_=9, RBT_=10, SEMI_=11, MLT_=12, DOT_=13, VERTICAL_BAR_=14, 
-		EQ_=15, COMMA_=16, SQ_=17, AT_=18;
+		RBE_=8, LBT_=9, RBT_=10, SEMI_=11, COLON_=12, MLT_=13, DOT_=14, VERTICAL_BAR_=15, 
+		EQ_=16, COMMA_=17, SQ_=18, AT_=19;
 	public static final int
 		RULE_sentences = 0, RULE_rules = 1, RULE_identifiers = 2, RULE_keyWords = 3, 
-		RULE_rbtMulti = 4, RULE_rbeMulti = 5;
+		RULE_symbols = 4, RULE_rbtMulti = 5, RULE_rbeMulti = 6;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"sentences", "rules", "identifiers", "keyWords", "rbtMulti", "rbeMulti"
+			"sentences", "rules", "identifiers", "keyWords", "symbols", "rbtMulti", 
+			"rbeMulti"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -32,15 +33,15 @@ public class TransferRuleParser extends Parser {
 	private static String[] makeLiteralNames() {
 		return new String[] {
 			null, null, null, null, "'DO NOT MATCH ANY THING, JUST FOR GENERATOR'", 
-			"'('", "')'", "'{'", "'}'", "'['", "']'", "';'", "'...'", "'.'", "'|'", 
-			"'='", "','", "'''", "'@'"
+			"'('", "')'", "'{'", "'}'", "'['", "']'", "';'", "':'", "'...'", "'.'", 
+			"'|'", "'='", "','", "'''", "'@'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
 			null, "KEYWORD_", "IDENTIFIER_", "WS", "FOR_GENERATOR", "LP_", "RP_", 
-			"LBE_", "RBE_", "LBT_", "RBT_", "SEMI_", "MLT_", "DOT_", "VERTICAL_BAR_", 
+			"LBE_", "RBE_", "LBT_", "RBT_", "SEMI_", "COLON_", "MLT_", "DOT_", "VERTICAL_BAR_", 
 			"EQ_", "COMMA_", "SQ_", "AT_"
 		};
 	}
@@ -124,26 +125,26 @@ public class TransferRuleParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(13); 
+			setState(15); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(12);
+				setState(14);
 				rules(0);
 				}
 				}
-				setState(15); 
+				setState(17); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << KEYWORD_) | (1L << IDENTIFIER_) | (1L << LP_) | (1L << LBE_) | (1L << LBT_) | (1L << SQ_) | (1L << AT_))) != 0) );
-			setState(18);
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << KEYWORD_) | (1L << IDENTIFIER_) | (1L << LP_) | (1L << LBE_) | (1L << LBT_) | (1L << VERTICAL_BAR_) | (1L << SQ_) | (1L << AT_))) != 0) );
+			setState(20);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==SEMI_) {
 				{
-				setState(17);
+				setState(19);
 				match(SEMI_);
 				}
 			}
@@ -204,6 +205,21 @@ public class TransferRuleParser extends Parser {
 			if ( listener instanceof TransferRuleListener ) ((TransferRuleListener)listener).exitSQRule(this);
 		}
 	}
+	public static class VERTICALRuleContext extends RulesContext {
+		public TerminalNode VERTICAL_BAR_() { return getToken(TransferRuleParser.VERTICAL_BAR_, 0); }
+		public RulesContext rules() {
+			return getRuleContext(RulesContext.class,0);
+		}
+		public VERTICALRuleContext(RulesContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TransferRuleListener ) ((TransferRuleListener)listener).enterVERTICALRule(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TransferRuleListener ) ((TransferRuleListener)listener).exitVERTICALRule(this);
+		}
+	}
 	public static class LBERuleContext extends RulesContext {
 		public TerminalNode LBE_() { return getToken(TransferRuleParser.LBE_, 0); }
 		public List<RulesContext> rules() {
@@ -252,6 +268,24 @@ public class TransferRuleParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof TransferRuleListener ) ((TransferRuleListener)listener).exitLBEMultiRule(this);
+		}
+	}
+	public static class SymbolRuleContext extends RulesContext {
+		public List<TerminalNode> SQ_() { return getTokens(TransferRuleParser.SQ_); }
+		public TerminalNode SQ_(int i) {
+			return getToken(TransferRuleParser.SQ_, i);
+		}
+		public SymbolsContext symbols() {
+			return getRuleContext(SymbolsContext.class,0);
+		}
+		public SymbolRuleContext(RulesContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TransferRuleListener ) ((TransferRuleListener)listener).enterSymbolRule(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TransferRuleListener ) ((TransferRuleListener)listener).exitSymbolRule(this);
 		}
 	}
 	public static class LBTMultiRuleContext extends RulesContext {
@@ -395,7 +429,7 @@ public class TransferRuleParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(99);
+			setState(107);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,12,_ctx) ) {
 			case 1:
@@ -404,7 +438,7 @@ public class TransferRuleParser extends Parser {
 				_ctx = _localctx;
 				_prevctx = _localctx;
 
-				setState(21);
+				setState(23);
 				identifiers();
 				}
 				break;
@@ -413,7 +447,7 @@ public class TransferRuleParser extends Parser {
 				_localctx = new KeywordsRuleContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(22);
+				setState(24);
 				keyWords();
 				}
 				break;
@@ -422,37 +456,37 @@ public class TransferRuleParser extends Parser {
 				_localctx = new LBEMultiRuleContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(23);
-				match(LBE_);
 				setState(25);
+				match(LBE_);
+				setState(27);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==COMMA_) {
 					{
-					setState(24);
+					setState(26);
 					match(COMMA_);
 					}
 				}
 
-				setState(27);
+				setState(29);
 				rules(0);
-				setState(32);
+				setState(34);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==VERTICAL_BAR_) {
 					{
 					{
-					setState(28);
+					setState(30);
 					match(VERTICAL_BAR_);
-					setState(29);
+					setState(31);
 					rules(0);
 					}
 					}
-					setState(34);
+					setState(36);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(35);
+				setState(37);
 				rbeMulti();
 				}
 				break;
@@ -461,37 +495,37 @@ public class TransferRuleParser extends Parser {
 				_localctx = new LBERuleContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(37);
-				match(LBE_);
 				setState(39);
+				match(LBE_);
+				setState(41);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==COMMA_) {
 					{
-					setState(38);
+					setState(40);
 					match(COMMA_);
 					}
 				}
 
-				setState(41);
+				setState(43);
 				rules(0);
-				setState(46);
+				setState(48);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==VERTICAL_BAR_) {
 					{
 					{
-					setState(42);
+					setState(44);
 					match(VERTICAL_BAR_);
-					setState(43);
+					setState(45);
 					rules(0);
 					}
 					}
-					setState(48);
+					setState(50);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(49);
+				setState(51);
 				match(RBE_);
 				}
 				break;
@@ -500,37 +534,37 @@ public class TransferRuleParser extends Parser {
 				_localctx = new LBTMultiRuleContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(51);
-				match(LBT_);
 				setState(53);
+				match(LBT_);
+				setState(55);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==COMMA_) {
 					{
-					setState(52);
+					setState(54);
 					match(COMMA_);
 					}
 				}
 
-				setState(55);
+				setState(57);
 				rules(0);
-				setState(60);
+				setState(62);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==VERTICAL_BAR_) {
 					{
 					{
-					setState(56);
+					setState(58);
 					match(VERTICAL_BAR_);
-					setState(57);
+					setState(59);
 					rules(0);
 					}
 					}
-					setState(62);
+					setState(64);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(63);
+				setState(65);
 				rbtMulti();
 				}
 				break;
@@ -539,37 +573,37 @@ public class TransferRuleParser extends Parser {
 				_localctx = new LBTRuleContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(65);
-				match(LBT_);
 				setState(67);
+				match(LBT_);
+				setState(69);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==COMMA_) {
 					{
-					setState(66);
+					setState(68);
 					match(COMMA_);
 					}
 				}
 
-				setState(69);
+				setState(71);
 				rules(0);
-				setState(74);
+				setState(76);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==VERTICAL_BAR_) {
 					{
 					{
-					setState(70);
+					setState(72);
 					match(VERTICAL_BAR_);
-					setState(71);
+					setState(73);
 					rules(0);
 					}
 					}
-					setState(76);
+					setState(78);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(77);
+				setState(79);
 				match(RBT_);
 				}
 				break;
@@ -578,37 +612,37 @@ public class TransferRuleParser extends Parser {
 				_localctx = new LPRuleContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(79);
-				match(LP_);
 				setState(81);
+				match(LP_);
+				setState(83);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==COMMA_) {
 					{
-					setState(80);
+					setState(82);
 					match(COMMA_);
 					}
 				}
 
-				setState(83);
+				setState(85);
 				rules(0);
-				setState(88);
+				setState(90);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==VERTICAL_BAR_) {
 					{
 					{
-					setState(84);
+					setState(86);
 					match(VERTICAL_BAR_);
-					setState(85);
+					setState(87);
 					rules(0);
 					}
 					}
-					setState(90);
+					setState(92);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(91);
+				setState(93);
 				match(RP_);
 				}
 				break;
@@ -617,11 +651,11 @@ public class TransferRuleParser extends Parser {
 				_localctx = new SQRuleContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(93);
-				match(SQ_);
-				setState(94);
-				rules(0);
 				setState(95);
+				match(SQ_);
+				setState(96);
+				rules(0);
+				setState(97);
 				match(SQ_);
 				}
 				break;
@@ -630,18 +664,42 @@ public class TransferRuleParser extends Parser {
 				_localctx = new ATRuleContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(97);
+				setState(99);
 				match(AT_);
-				setState(98);
-				rules(1);
+				setState(100);
+				rules(3);
+				}
+				break;
+			case 10:
+				{
+				_localctx = new VERTICALRuleContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(101);
+				match(VERTICAL_BAR_);
+				setState(102);
+				rules(2);
+				}
+				break;
+			case 11:
+				{
+				_localctx = new SymbolRuleContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(103);
+				match(SQ_);
+				setState(104);
+				symbols();
+				setState(105);
+				match(SQ_);
 				}
 				break;
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(112);
+			setState(120);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,15,_ctx);
-			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
+			while ( _alt!=2 && _alt!= ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
@@ -649,9 +707,9 @@ public class TransferRuleParser extends Parser {
 					{
 					_localctx = new EqualRuleContext(new RulesContext(_parentctx, _parentState));
 					pushNewRecursionContext(_localctx, _startState, RULE_rules);
-					setState(101);
-					if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
-					setState(106); 
+					setState(109);
+					if (!(precpred(_ctx, 10))) throw new FailedPredicateException(this, "precpred(_ctx, 10)");
+					setState(114); 
 					_errHandler.sync(this);
 					_alt = 1;
 					do {
@@ -659,17 +717,17 @@ public class TransferRuleParser extends Parser {
 						case 1:
 							{
 							{
-							setState(103);
+							setState(111);
 							_errHandler.sync(this);
 							_la = _input.LA(1);
 							if (_la==EQ_) {
 								{
-								setState(102);
+								setState(110);
 								match(EQ_);
 								}
 							}
 
-							setState(105);
+							setState(113);
 							rules(0);
 							}
 							}
@@ -677,14 +735,14 @@ public class TransferRuleParser extends Parser {
 						default:
 							throw new NoViableAltException(this);
 						}
-						setState(108); 
+						setState(116); 
 						_errHandler.sync(this);
 						_alt = getInterpreter().adaptivePredict(_input,14,_ctx);
-					} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
+					} while ( _alt!=2 && _alt!= ATN.INVALID_ALT_NUMBER );
 					}
 					} 
 				}
-				setState(114);
+				setState(122);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,15,_ctx);
 			}
@@ -731,7 +789,7 @@ public class TransferRuleParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(122); 
+			setState(130); 
 			_errHandler.sync(this);
 			_alt = 1;
 			do {
@@ -739,24 +797,24 @@ public class TransferRuleParser extends Parser {
 				case 1:
 					{
 					{
-					setState(115);
+					setState(123);
 					match(IDENTIFIER_);
-					setState(117);
+					setState(125);
 					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,16,_ctx) ) {
 					case 1:
 						{
-						setState(116);
+						setState(124);
 						match(DOT_);
 						}
 						break;
 					}
-					setState(120);
+					setState(128);
 					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,17,_ctx) ) {
 					case 1:
 						{
-						setState(119);
+						setState(127);
 						match(IDENTIFIER_);
 						}
 						break;
@@ -767,10 +825,10 @@ public class TransferRuleParser extends Parser {
 				default:
 					throw new NoViableAltException(this);
 				}
-				setState(124); 
+				setState(132); 
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,18,_ctx);
-			} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
+			} while ( _alt!=2 && _alt!= ATN.INVALID_ALT_NUMBER );
 			}
 		}
 		catch (RecognitionException re) {
@@ -810,7 +868,7 @@ public class TransferRuleParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(127); 
+			setState(135); 
 			_errHandler.sync(this);
 			_alt = 1;
 			do {
@@ -818,7 +876,7 @@ public class TransferRuleParser extends Parser {
 				case 1:
 					{
 					{
-					setState(126);
+					setState(134);
 					match(KEYWORD_);
 					}
 					}
@@ -826,10 +884,70 @@ public class TransferRuleParser extends Parser {
 				default:
 					throw new NoViableAltException(this);
 				}
-				setState(129); 
+				setState(137); 
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,19,_ctx);
-			} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
+			} while ( _alt!=2 && _alt!= ATN.INVALID_ALT_NUMBER );
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class SymbolsContext extends ParserRuleContext {
+		public TerminalNode LP_() { return getToken(TransferRuleParser.LP_, 0); }
+		public TerminalNode RP_() { return getToken(TransferRuleParser.RP_, 0); }
+		public TerminalNode LBE_() { return getToken(TransferRuleParser.LBE_, 0); }
+		public TerminalNode RBE_() { return getToken(TransferRuleParser.RBE_, 0); }
+		public TerminalNode LBT_() { return getToken(TransferRuleParser.LBT_, 0); }
+		public TerminalNode RBT_() { return getToken(TransferRuleParser.RBT_, 0); }
+		public TerminalNode SEMI_() { return getToken(TransferRuleParser.SEMI_, 0); }
+		public TerminalNode COLON_() { return getToken(TransferRuleParser.COLON_, 0); }
+		public TerminalNode MLT_() { return getToken(TransferRuleParser.MLT_, 0); }
+		public TerminalNode DOT_() { return getToken(TransferRuleParser.DOT_, 0); }
+		public TerminalNode VERTICAL_BAR_() { return getToken(TransferRuleParser.VERTICAL_BAR_, 0); }
+		public TerminalNode EQ_() { return getToken(TransferRuleParser.EQ_, 0); }
+		public TerminalNode COMMA_() { return getToken(TransferRuleParser.COMMA_, 0); }
+		public TerminalNode SQ_() { return getToken(TransferRuleParser.SQ_, 0); }
+		public TerminalNode AT_() { return getToken(TransferRuleParser.AT_, 0); }
+		public SymbolsContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_symbols; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TransferRuleListener ) ((TransferRuleListener)listener).enterSymbols(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TransferRuleListener ) ((TransferRuleListener)listener).exitSymbols(this);
+		}
+	}
+
+	public final SymbolsContext symbols() throws RecognitionException {
+		SymbolsContext _localctx = new SymbolsContext(_ctx, getState());
+		enterRule(_localctx, 8, RULE_symbols);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(139);
+			_la = _input.LA(1);
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << LP_) | (1L << RP_) | (1L << LBE_) | (1L << RBE_) | (1L << LBT_) | (1L << RBT_) | (1L << SEMI_) | (1L << COLON_) | (1L << MLT_) | (1L << DOT_) | (1L << VERTICAL_BAR_) | (1L << EQ_) | (1L << COMMA_) | (1L << SQ_) | (1L << AT_))) != 0)) ) {
+			_errHandler.recoverInline(this);
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
+				consume();
+			}
 			}
 		}
 		catch (RecognitionException re) {
@@ -862,13 +980,13 @@ public class TransferRuleParser extends Parser {
 
 	public final RbtMultiContext rbtMulti() throws RecognitionException {
 		RbtMultiContext _localctx = new RbtMultiContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_rbtMulti);
+		enterRule(_localctx, 10, RULE_rbtMulti);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(131);
+			setState(141);
 			match(RBT_);
-			setState(132);
+			setState(142);
 			match(MLT_);
 			}
 		}
@@ -902,13 +1020,13 @@ public class TransferRuleParser extends Parser {
 
 	public final RbeMultiContext rbeMulti() throws RecognitionException {
 		RbeMultiContext _localctx = new RbeMultiContext(_ctx, getState());
-		enterRule(_localctx, 10, RULE_rbeMulti);
+		enterRule(_localctx, 12, RULE_rbeMulti);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(134);
+			setState(144);
 			match(RBE_);
-			setState(135);
+			setState(145);
 			match(MLT_);
 			}
 		}
@@ -933,50 +1051,55 @@ public class TransferRuleParser extends Parser {
 	private boolean rules_sempred(RulesContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 0:
-			return precpred(_ctx, 8);
+			return precpred(_ctx, 10);
 		}
 		return true;
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\24\u008c\4\2\t\2"+
-		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\3\2\6\2\20\n\2\r\2\16\2\21\3"+
-		"\2\5\2\25\n\2\3\3\3\3\3\3\3\3\3\3\5\3\34\n\3\3\3\3\3\3\3\7\3!\n\3\f\3"+
-		"\16\3$\13\3\3\3\3\3\3\3\3\3\5\3*\n\3\3\3\3\3\3\3\7\3/\n\3\f\3\16\3\62"+
-		"\13\3\3\3\3\3\3\3\3\3\5\38\n\3\3\3\3\3\3\3\7\3=\n\3\f\3\16\3@\13\3\3\3"+
-		"\3\3\3\3\3\3\5\3F\n\3\3\3\3\3\3\3\7\3K\n\3\f\3\16\3N\13\3\3\3\3\3\3\3"+
-		"\3\3\5\3T\n\3\3\3\3\3\3\3\7\3Y\n\3\f\3\16\3\\\13\3\3\3\3\3\3\3\3\3\3\3"+
-		"\3\3\3\3\3\3\5\3f\n\3\3\3\3\3\5\3j\n\3\3\3\6\3m\n\3\r\3\16\3n\7\3q\n\3"+
-		"\f\3\16\3t\13\3\3\4\3\4\5\4x\n\4\3\4\5\4{\n\4\6\4}\n\4\r\4\16\4~\3\5\6"+
-		"\5\u0082\n\5\r\5\16\5\u0083\3\6\3\6\3\6\3\7\3\7\3\7\3\7\2\3\4\b\2\4\6"+
-		"\b\n\f\2\2\2\u00a0\2\17\3\2\2\2\4e\3\2\2\2\6|\3\2\2\2\b\u0081\3\2\2\2"+
-		"\n\u0085\3\2\2\2\f\u0088\3\2\2\2\16\20\5\4\3\2\17\16\3\2\2\2\20\21\3\2"+
-		"\2\2\21\17\3\2\2\2\21\22\3\2\2\2\22\24\3\2\2\2\23\25\7\r\2\2\24\23\3\2"+
-		"\2\2\24\25\3\2\2\2\25\3\3\2\2\2\26\27\b\3\1\2\27f\5\6\4\2\30f\5\b\5\2"+
-		"\31\33\7\t\2\2\32\34\7\22\2\2\33\32\3\2\2\2\33\34\3\2\2\2\34\35\3\2\2"+
-		"\2\35\"\5\4\3\2\36\37\7\20\2\2\37!\5\4\3\2 \36\3\2\2\2!$\3\2\2\2\" \3"+
-		"\2\2\2\"#\3\2\2\2#%\3\2\2\2$\"\3\2\2\2%&\5\f\7\2&f\3\2\2\2\')\7\t\2\2"+
-		"(*\7\22\2\2)(\3\2\2\2)*\3\2\2\2*+\3\2\2\2+\60\5\4\3\2,-\7\20\2\2-/\5\4"+
-		"\3\2.,\3\2\2\2/\62\3\2\2\2\60.\3\2\2\2\60\61\3\2\2\2\61\63\3\2\2\2\62"+
-		"\60\3\2\2\2\63\64\7\n\2\2\64f\3\2\2\2\65\67\7\13\2\2\668\7\22\2\2\67\66"+
-		"\3\2\2\2\678\3\2\2\289\3\2\2\29>\5\4\3\2:;\7\20\2\2;=\5\4\3\2<:\3\2\2"+
-		"\2=@\3\2\2\2><\3\2\2\2>?\3\2\2\2?A\3\2\2\2@>\3\2\2\2AB\5\n\6\2Bf\3\2\2"+
-		"\2CE\7\13\2\2DF\7\22\2\2ED\3\2\2\2EF\3\2\2\2FG\3\2\2\2GL\5\4\3\2HI\7\20"+
-		"\2\2IK\5\4\3\2JH\3\2\2\2KN\3\2\2\2LJ\3\2\2\2LM\3\2\2\2MO\3\2\2\2NL\3\2"+
-		"\2\2OP\7\f\2\2Pf\3\2\2\2QS\7\7\2\2RT\7\22\2\2SR\3\2\2\2ST\3\2\2\2TU\3"+
-		"\2\2\2UZ\5\4\3\2VW\7\20\2\2WY\5\4\3\2XV\3\2\2\2Y\\\3\2\2\2ZX\3\2\2\2Z"+
-		"[\3\2\2\2[]\3\2\2\2\\Z\3\2\2\2]^\7\b\2\2^f\3\2\2\2_`\7\23\2\2`a\5\4\3"+
-		"\2ab\7\23\2\2bf\3\2\2\2cd\7\24\2\2df\5\4\3\3e\26\3\2\2\2e\30\3\2\2\2e"+
-		"\31\3\2\2\2e\'\3\2\2\2e\65\3\2\2\2eC\3\2\2\2eQ\3\2\2\2e_\3\2\2\2ec\3\2"+
-		"\2\2fr\3\2\2\2gl\f\n\2\2hj\7\21\2\2ih\3\2\2\2ij\3\2\2\2jk\3\2\2\2km\5"+
-		"\4\3\2li\3\2\2\2mn\3\2\2\2nl\3\2\2\2no\3\2\2\2oq\3\2\2\2pg\3\2\2\2qt\3"+
-		"\2\2\2rp\3\2\2\2rs\3\2\2\2s\5\3\2\2\2tr\3\2\2\2uw\7\4\2\2vx\7\17\2\2w"+
-		"v\3\2\2\2wx\3\2\2\2xz\3\2\2\2y{\7\4\2\2zy\3\2\2\2z{\3\2\2\2{}\3\2\2\2"+
-		"|u\3\2\2\2}~\3\2\2\2~|\3\2\2\2~\177\3\2\2\2\177\7\3\2\2\2\u0080\u0082"+
-		"\7\3\2\2\u0081\u0080\3\2\2\2\u0082\u0083\3\2\2\2\u0083\u0081\3\2\2\2\u0083"+
-		"\u0084\3\2\2\2\u0084\t\3\2\2\2\u0085\u0086\7\f\2\2\u0086\u0087\7\16\2"+
-		"\2\u0087\13\3\2\2\2\u0088\u0089\7\n\2\2\u0089\u008a\7\16\2\2\u008a\r\3"+
-		"\2\2\2\26\21\24\33\")\60\67>ELSZeinrwz~\u0083";
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\25\u0096\4\2\t\2"+
+		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\3\2\6\2\22\n\2\r\2\16"+
+		"\2\23\3\2\5\2\27\n\2\3\3\3\3\3\3\3\3\3\3\5\3\36\n\3\3\3\3\3\3\3\7\3#\n"+
+		"\3\f\3\16\3&\13\3\3\3\3\3\3\3\3\3\5\3,\n\3\3\3\3\3\3\3\7\3\61\n\3\f\3"+
+		"\16\3\64\13\3\3\3\3\3\3\3\3\3\5\3:\n\3\3\3\3\3\3\3\7\3?\n\3\f\3\16\3B"+
+		"\13\3\3\3\3\3\3\3\3\3\5\3H\n\3\3\3\3\3\3\3\7\3M\n\3\f\3\16\3P\13\3\3\3"+
+		"\3\3\3\3\3\3\5\3V\n\3\3\3\3\3\3\3\7\3[\n\3\f\3\16\3^\13\3\3\3\3\3\3\3"+
+		"\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3n\n\3\3\3\3\3\5\3r\n\3"+
+		"\3\3\6\3u\n\3\r\3\16\3v\7\3y\n\3\f\3\16\3|\13\3\3\4\3\4\5\4\u0080\n\4"+
+		"\3\4\5\4\u0083\n\4\6\4\u0085\n\4\r\4\16\4\u0086\3\5\6\5\u008a\n\5\r\5"+
+		"\16\5\u008b\3\6\3\6\3\7\3\7\3\7\3\b\3\b\3\b\3\b\2\3\4\t\2\4\6\b\n\f\16"+
+		"\2\3\3\2\7\25\2\u00ab\2\21\3\2\2\2\4m\3\2\2\2\6\u0084\3\2\2\2\b\u0089"+
+		"\3\2\2\2\n\u008d\3\2\2\2\f\u008f\3\2\2\2\16\u0092\3\2\2\2\20\22\5\4\3"+
+		"\2\21\20\3\2\2\2\22\23\3\2\2\2\23\21\3\2\2\2\23\24\3\2\2\2\24\26\3\2\2"+
+		"\2\25\27\7\r\2\2\26\25\3\2\2\2\26\27\3\2\2\2\27\3\3\2\2\2\30\31\b\3\1"+
+		"\2\31n\5\6\4\2\32n\5\b\5\2\33\35\7\t\2\2\34\36\7\23\2\2\35\34\3\2\2\2"+
+		"\35\36\3\2\2\2\36\37\3\2\2\2\37$\5\4\3\2 !\7\21\2\2!#\5\4\3\2\" \3\2\2"+
+		"\2#&\3\2\2\2$\"\3\2\2\2$%\3\2\2\2%\'\3\2\2\2&$\3\2\2\2\'(\5\16\b\2(n\3"+
+		"\2\2\2)+\7\t\2\2*,\7\23\2\2+*\3\2\2\2+,\3\2\2\2,-\3\2\2\2-\62\5\4\3\2"+
+		"./\7\21\2\2/\61\5\4\3\2\60.\3\2\2\2\61\64\3\2\2\2\62\60\3\2\2\2\62\63"+
+		"\3\2\2\2\63\65\3\2\2\2\64\62\3\2\2\2\65\66\7\n\2\2\66n\3\2\2\2\679\7\13"+
+		"\2\28:\7\23\2\298\3\2\2\29:\3\2\2\2:;\3\2\2\2;@\5\4\3\2<=\7\21\2\2=?\5"+
+		"\4\3\2><\3\2\2\2?B\3\2\2\2@>\3\2\2\2@A\3\2\2\2AC\3\2\2\2B@\3\2\2\2CD\5"+
+		"\f\7\2Dn\3\2\2\2EG\7\13\2\2FH\7\23\2\2GF\3\2\2\2GH\3\2\2\2HI\3\2\2\2I"+
+		"N\5\4\3\2JK\7\21\2\2KM\5\4\3\2LJ\3\2\2\2MP\3\2\2\2NL\3\2\2\2NO\3\2\2\2"+
+		"OQ\3\2\2\2PN\3\2\2\2QR\7\f\2\2Rn\3\2\2\2SU\7\7\2\2TV\7\23\2\2UT\3\2\2"+
+		"\2UV\3\2\2\2VW\3\2\2\2W\\\5\4\3\2XY\7\21\2\2Y[\5\4\3\2ZX\3\2\2\2[^\3\2"+
+		"\2\2\\Z\3\2\2\2\\]\3\2\2\2]_\3\2\2\2^\\\3\2\2\2_`\7\b\2\2`n\3\2\2\2ab"+
+		"\7\24\2\2bc\5\4\3\2cd\7\24\2\2dn\3\2\2\2ef\7\25\2\2fn\5\4\3\5gh\7\21\2"+
+		"\2hn\5\4\3\4ij\7\24\2\2jk\5\n\6\2kl\7\24\2\2ln\3\2\2\2m\30\3\2\2\2m\32"+
+		"\3\2\2\2m\33\3\2\2\2m)\3\2\2\2m\67\3\2\2\2mE\3\2\2\2mS\3\2\2\2ma\3\2\2"+
+		"\2me\3\2\2\2mg\3\2\2\2mi\3\2\2\2nz\3\2\2\2ot\f\f\2\2pr\7\22\2\2qp\3\2"+
+		"\2\2qr\3\2\2\2rs\3\2\2\2su\5\4\3\2tq\3\2\2\2uv\3\2\2\2vt\3\2\2\2vw\3\2"+
+		"\2\2wy\3\2\2\2xo\3\2\2\2y|\3\2\2\2zx\3\2\2\2z{\3\2\2\2{\5\3\2\2\2|z\3"+
+		"\2\2\2}\177\7\4\2\2~\u0080\7\20\2\2\177~\3\2\2\2\177\u0080\3\2\2\2\u0080"+
+		"\u0082\3\2\2\2\u0081\u0083\7\4\2\2\u0082\u0081\3\2\2\2\u0082\u0083\3\2"+
+		"\2\2\u0083\u0085\3\2\2\2\u0084}\3\2\2\2\u0085\u0086\3\2\2\2\u0086\u0084"+
+		"\3\2\2\2\u0086\u0087\3\2\2\2\u0087\7\3\2\2\2\u0088\u008a\7\3\2\2\u0089"+
+		"\u0088\3\2\2\2\u008a\u008b\3\2\2\2\u008b\u0089\3\2\2\2\u008b\u008c\3\2"+
+		"\2\2\u008c\t\3\2\2\2\u008d\u008e\t\2\2\2\u008e\13\3\2\2\2\u008f\u0090"+
+		"\7\f\2\2\u0090\u0091\7\17\2\2\u0091\r\3\2\2\2\u0092\u0093\7\n\2\2\u0093"+
+		"\u0094\7\17\2\2\u0094\17\3\2\2\2\26\23\26\35$+\629@GNU\\mqvz\177\u0082"+
+		"\u0086\u008b";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

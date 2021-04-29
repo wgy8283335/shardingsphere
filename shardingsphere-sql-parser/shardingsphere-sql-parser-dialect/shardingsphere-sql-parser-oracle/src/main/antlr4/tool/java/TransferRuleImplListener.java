@@ -8,6 +8,8 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TransferRuleImplListener extends TransferRuleBaseListener{
     
@@ -23,7 +25,15 @@ public class TransferRuleImplListener extends TransferRuleBaseListener{
         this.writer = writer;
         this.parseTreeProperty = new ParseTreeProperty<String>();
     }
-
+    
+    public String getG4Rule(ParseTree ctx) {
+        String g4Rule = parseTreeProperty.get(ctx);
+        Pattern pattern = Pattern.compile("\\s\\s+"); //去掉空格符合换行符     
+        Matcher matcher = pattern.matcher(g4Rule);
+        String result = matcher.replaceAll(" ");
+        return result;
+    }
+    
     @Override public void exitSentences(final TransferRuleParser.SentencesContext ctx) {
         StringBuilder buf = new StringBuilder();
         for (TransferRuleParser.RulesContext rulesContext : ctx.rules()) {
@@ -45,6 +55,7 @@ public class TransferRuleImplListener extends TransferRuleBaseListener{
                 buf.append(underline2Camel(temp));
             }
         }
+        buf.append(" ");
         setProperty(ctx, buf.toString());
     }
 
@@ -55,6 +66,7 @@ public class TransferRuleImplListener extends TransferRuleBaseListener{
             buf.append(" ");
             buf.append(node.getText());
         }
+        buf.append(" ");
         setProperty(ctx, buf.toString());
     }
 
@@ -163,6 +175,25 @@ public class TransferRuleImplListener extends TransferRuleBaseListener{
         setProperty(ctx, buf.toString());
     }
 
+    @Override public void exitVERTICALRule(final TransferRuleParser.VERTICALRuleContext ctx) {
+        StringBuilder buf = new StringBuilder();
+        buf.append(" | ");
+        buf.append(getProperty(ctx.rules()));
+        setProperty(ctx, buf.toString());
+    }
+
+    @Override public void exitSymbolRule(final TransferRuleParser.SymbolRuleContext ctx) {
+        StringBuilder buf = new StringBuilder();
+        if (ctx.SQ_()!=null && ctx.SQ_().get(0)!=null && !Strings.isNullOrEmpty(ctx.SQ_().get(0).getText())) {
+            buf.append(" SQ_ ");
+        }
+        buf.append(ctx.children.get(1).getText());
+        if (ctx.SQ_()!=null && ctx.SQ_().get(1)!=null && !Strings.isNullOrEmpty(ctx.SQ_().get(1).getText())) {
+            buf.append(" SQ_ ");
+        }
+        setProperty(ctx, buf.toString());
+    }
+
     private void write(String text) {
         try {
             writer.append(text);
@@ -213,4 +244,5 @@ public class TransferRuleImplListener extends TransferRuleBaseListener{
         }
         return str;
     }
+    
 }

@@ -1,9 +1,7 @@
-SET { { (column [, column ]...) = (subquery)
-  | column = { expr | (subquery) | DEFAULT }
-  }
-     [, { (column [, column]...) = (subquery)
-        | column = { expr | (subquery) | DEFAULT }
-        }
-     ]...
-| VALUE (t_alias) = { expr | (subquery) }
-}};
+DEFAULT DIRECTORY directory 
+ [ LOCATION '(' directory ':' ''' location_specifier ''' ')' ]
+ [ ACCESS PARAMETERS 
+   [ BADFILE filename ]
+   [ LOGFILE filename ]
+   [ DISCARDFILE filename ] ]
+ [ REJECT LIMIT { integer | UNLIMITED} ]

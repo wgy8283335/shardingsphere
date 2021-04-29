@@ -1,7 +1,20 @@
-DROP TABLE [ schema. ] table [ CASCADE CONSTRAINTS ] [ PURGE ] ;
-UPDATE [ hint ] { dml_table_expression_clause | ONLY (dml_table_expression_clause) } [ t_alias ] update_set_clause [ where_clause ] [ returning_clause ] [error_logging_clause] ;
-SET TRANSACTION { { READ { ONLY | WRITE } | ISOLATION LEVEL { SERIALIZABLE | READ COMMITTED } | USE ROLLBACK SEGMENT rollback_segment } [ NAME string ] | NAME string } ;
-[ with_clause ] SELECT [ hint ] [ { { DISTINCT | UNIQUE } | ALL } ] select_list FROM { table_reference | join_clause | ( join_clause ) | inline_analytic_view } [ , { table_reference | join_clause | (join_clause) | inline_analytic_view} ] ... [ where_clause ] [ hierarchical_query_clause ] [ group_by_clause ] [ model_clause ]
+CREATE [ { GLOBAL | PRIVATE } TEMPORARY | SHARDED | DUPLICATED | [ IMMUTABLE ] BLOCKCHAIN 
+  | IMMUTABLE  ] 
+   TABLE
+  [ schema. ] table
+  [ SHARING = { METADATA | DATA | EXTENDED DATA | NONE } ]
+  { relational_table | object_table | XMLType_table }
+  [ MEMOPTIMIZE FOR READ ]
+  [ MEMOPTIMIZE FOR WRITE ]
+  [ PARENT [ schema. ] table ] ;
+  
+CREATE [ UNIQUE | BITMAP ] INDEX [ schema. ] index
+  ON { cluster_index_clause
+     | table_index_clause
+     | bitmap_join_index_clause
+     }
+[ USABLE | UNUSABLE ]
+[ { DEFERRED | IMMEDIATE } INVALIDATION ] ;
 
 ALTER TABLE [ schema. ] table
   [ memoptimize_read_clause ]
@@ -22,57 +35,238 @@ ALTER TABLE [ schema. ] table
     { TABLE LOCK | ALL TRIGGERS | CONTAINER_MAP | CONTAINERS_DEFAULT }
   ] ...
   ;
+
+ALTER INDEX [ schema. ]index
+  { { deallocate_unused_clause
+    | allocate_extent_clause
+    | shrink_clause
+    | parallel_clause
+    | physical_attributes_clause
+    | logging_clause
+    | partial_index_clause
+    } ...
+  | rebuild_clause
+  | PARAMETERS ( 'ODCI_parameters' )
+               )
+  | COMPILE
+  | { ENABLE | DISABLE }
+  | UNUSABLE [ ONLINE ] [ { DEFERRED | IMMEDIATE } INVALIDATION ]
+  | VISIBLE | INVISIBLE
+  | RENAME TO new_name
+  | COALESCE [ CLEANUP ] [ ONLY ] [ parallel_clause ]
+  | { MONITORING | NOMONITORING } USAGE
+  | UPDATE BLOCK REFERENCES
+  | alter_index_partitioning
+  }
+  ;
   
-CREATE USER user
-   { { 
-       IDENTIFIED       
-    
-        {
-           BY password [ [HTTP] DIGEST { ENABLE | DISABLE } ]
-           | EXTERNALLY [ AS 'certificate_DN'  |  AS 'kerberos_principal_name' ]
-           | GLOBALLY [ AS '[ directory_DN ]' ]
-           }
+DROP TABLE [ schema. ] table
+  [ CASCADE CONSTRAINTS ] [ PURGE ] ;
+  
+DROP INDEX [ schema. ] index [ ONLINE ] [ FORCE ]
+  [ { DEFERRED | IMMEDIATE } INVALIDATION ];
+  
+GRANT
+  { { { grant_system_privileges | grant_object_privileges }
+      [ CONTAINER = { CURRENT | ALL } ] }
+  | grant_roles_to_programs
+  } ;
+  
+REVOKE
+  { { revoke_system_privileges | revoke_object_privileges }
+    [ CONTAINER = { CURRENT | ALL } ] }
+  | revoke_roles_from_programs ;
+  
+INSERT [ hint ]
+   { single_table_insert | multi_table_insert } ;
+   
+UPDATE [ hint ]
+  { dml_table_expression_clause
+  | ONLY (dml_table_expression_clause)
+  } [ t_alias ]
+  update_set_clause
+  [ where_clause ]
+  [ returning_clause ]
+  [error_logging_clause] ;
 
-        }               
-          | NO AUTHENTICATION
-   }
-   [ DEFAULT COLLATION collation_name ]
-   [ DEFAULT TABLESPACE tablespace
-   | [ LOCAL ] TEMPORARY TABLESPACE { tablespace | tablespace_group_name }
-   | { QUOTA { size_clause | UNLIMITED } ON tablespace }...
-   | PROFILE profile
-   | PASSWORD EXPIRE
-   | ACCOUNT { LOCK | UNLOCK }
-     [ DEFAULT TABLESPACE tablespace
-     | TEMPORARY TABLESPACE
-          { tablespace | tablespace_group_name }
-     | { QUOTA { size_clause | UNLIMITED } ON tablespace }...
-     | PROFILE profile
-     | PASSWORD EXPIRE
-     | ACCOUNT { LOCK | UNLOCK }
-     | ENABLE EDITIONS
-     | CONTAINER = { CURRENT | ALL }
-     ]...
-  ] ;
+DELETE [ hint ]
+   [ FROM ]
+   { dml_table_expression_clause
+   | ONLY (dml_table_expression_clause)
+   } [ t_alias ]
+     [ where_clause ]
+     [ returning_clause ]
+     [error_logging_clause];
+     
     
-SET
-{ { (column [, column ]...) = (subquery)
-  | column = { expr | (subquery) | DEFAULT }
-  }
-     [, { (column [, column]...) = (subquery)
-        | column = { expr | (subquery) | DEFAULT }
+subquery [ for_update_clause ] ;
+     
+{ query_block
+| subquery { UNION [ALL] | INTERSECT | MINUS } subquery
+    [ { UNION [ALL] | INTERSECT | MINUS } subquery ]...
+| ( subquery )
+} [ order_by_clause ] [ row_limiting_clause ]
+
+  [ with_clause ]
+SELECT [ hint ] [ { { DISTINCT | UNIQUE } | ALL } ] select_list
+  FROM { table_reference | join_clause | ( join_clause ) | inline_analytic_view }
+         [ , { table_reference | join_clause | (join_clause) | inline_analytic_view} ] ...
+  [ where_clause ]
+  [ hierarchical_query_clause ]
+  [ group_by_clause ]
+  [ model_clause ]
+
+WITH [ plsql_declarations ] [ subquery_factoring_clause | subav_factoring_clause ]
+              [, { subquery_factoring_clause | subav_factoring_clause } ]
+
+{ function_declaration | procedure_declaration }...
+
+query_name ([c_alias [, c_alias]...]) AS (subquery) [search_clause] [cycle_clause]
+
+{ SEARCH
+        { DEPTH FIRST BY c_alias [, c_alias]...
+            [ ASC | DESC ]
+            [ NULLS FIRST | NULLS LAST ]
+         | BREADTH FIRST BY c_alias [, c_alias]...
+            [ ASC | DESC ]
+            [ NULLS FIRST | NULLS LAST ]
         }
-     ]...
-| VALUE (t_alias) = { expr | (subquery) }
-}};
+        SET ordering_column
+}
 
-{ [ schema. ]
-  { table
-    [ partition_extension_clause
-    | @ dblink
-    ]
+{CYCLE c_alias [, c_alias]...
+    SET cycle_mark_c_alias TO cycle_value
+    DEFAULT no_cycle_value
+}
+
+subav_name ANALYTIC VIEW AS (subav_clause)
+
+USING  { [schema.]base_av_name [hierarchies_clause] [filter_clauses] [add_calcs_clause] }
+
+HIERARCHIES ( [ hier_id [, hier_id]... ] )
+
+FILTER FACT (filter_clause [, filter_clause]...)
+
+{ query_name
+| [ schema. ]
+  { table [ partition_extension_clause
+          | @ dblink
+          ]
   | { view | materialized view } [ @ dblink ]
-  }
-| ( subquery [ subquery_restriction_clause ] )
+  | analytic_view [ hierarchies_clause ]
+  | hierarchy
+  } [sample_clause]
+| [ LATERAL ] (subquery [ subquery_restriction_clause ])
 | table_collection_expression
 }
+
+DEFAULT DIRECTORY directory 
+ [ LOCATION '(' directory ':' ''' location_specifier ''' ')' ]
+ [ ACCESS PARAMETERS 
+   [ BADFILE filename ]
+   [ LOGFILE filename ]
+   [ DISCARDFILE filename ] ]
+ [ REJECT LIMIT { integer | UNLIMITED} ]
+
+[ { (MEMOPTIMIZE FOR READ) | (NO MEMOPTIMIZE FOR READ) } ]
+
+{ { { physical_attributes_clause
+    | logging_clause
+    | table_compression
+    | inmemory_table_clause
+    | ilm_clause
+    | supplemental_table_logging
+    | allocate_extent_clause
+    | deallocate_unused_clause
+    | { CACHE | NOCACHE }
+    | RESULT_CACHE ( MODE {DEFAULT | FORCE} )
+    | upgrade_table_clause
+    | records_per_block_clause
+    | parallel_clause
+    | row_movement_clause
+    | flashback_archive_clause
+    }...
+  | RENAME TO new_table_name
+  } [ alter_iot_clauses ] [ alter_XMLSchema_clause ]
+| { shrink_clause 
+  | READ ONLY
+  | READ WRITE 
+  | REKEY encryption_spec 
+  | DEFAULT COLLATION collation_name
+  | [NO] ROW ARCHIVAL
+  | ADD attribute_clustering_clause
+  | MODIFY CLUSTERING [ clustering_when ] [ zonemap_clause ]
+  | DROP CLUSTERING
+  }
+}
+
+[ { PCTFREE integer
+  | PCTUSED integer
+  | INITRANS integer
+  | storage_clause
+  }...
+]
+
+{ LOGGING | NOLOGGING |  FILESYSTEM_LIKE_LOGGING }
+
+COMPRESS
+| ROW STORE COMPRESS [ BASIC | ADVANCED ]
+| COLUMN STORE COMPRESS [  FOR { QUERY | ARCHIVE } [ LOW | HIGH ] ]
+  [ [NO] ROW LEVEL LOCKING ]
+| NOCOMPRESS
+
+[ { INMEMORY [ inmemory_attributes ] } | { NO INMEMORY } ]
+[ inmemory_column_clause ]
+
+[ inmemory_memcompress ] [ inmemory_priority ] [ inmemory_distribute ] [ inmemory_duplicate ]
+
+MEMCOMPRESS FOR { DML | QUERY [ LOW | HIGH ] | CAPACITY [ LOW | HIGH ] }
+| NO MEMCOMPRESS
+
+PRIORITY { NONE | LOW | MEDIUM | HIGH | CRITICAL }
+
+DISTRIBUTE [ AUTO | BY { ROWID RANGE | PARTITION | SUBPARTITION } ]
+           [ FOR SERVICE { DEFAULT | ALL | service_name | NONE } ]
+
+DUPLICATE | DUPLICATE ALL | NO DUPLICATE
+
+{ INMEMORY [ inmemory_memcompress ] | NO INMEMORY } ( column [, column ]... )
+ [ { INMEMORY [ inmemory_memcompress ] | NO INMEMORY } ( column [, column ]... ) ]...
+
+ILM
+{ ADD POLICY ilm_policy_clause
+| { DELETE | ENABLE | DISABLE } POLICY ilm_policy_name
+| DELETE_ALL | ENABLE_ALL | DISABLE_ALL
+}
+
+{ ilm_compression_policy | ilm_tiering_policy | ilm_inmemory_policy }
+
+{ table_compression { SEGMENT | GROUP } 
+  { { AFTER ilm_time_period OF { { NO ACCESS } | { NO MODIFICATION } | CREATION } }
+  | { ON function_name } }
+}
+|
+{ { ROW STORE COMPRESS ADVANCED
+  | COLUMN STORE COMPRESS FOR QUERY  }
+  ROW AFTER ilm_time_period OF NO MODIFICATION
+}
+
+{ TIER TO tablespace [ SEGMENT | GROUP ] [ ON function_name ] }
+|
+{ TIER TO tablespace READ ONLY [ SEGMENT | GROUP ] 
+  { { AFTER ilm_time_period OF { { NO ACCESS } | { NO MODIFICATION } | CREATION } }
+  | { ON function_name } } }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

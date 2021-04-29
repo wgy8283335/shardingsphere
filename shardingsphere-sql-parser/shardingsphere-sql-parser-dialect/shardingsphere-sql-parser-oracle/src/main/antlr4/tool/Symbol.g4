@@ -24,6 +24,7 @@ RBE_:                '}';
 LBT_:                '[';
 RBT_:                ']';
 SEMI_:               ';';
+COLON_:              ':';
 MLT_:                '...';
 DOT_:                '.';
 VERTICAL_BAR_:       '|';

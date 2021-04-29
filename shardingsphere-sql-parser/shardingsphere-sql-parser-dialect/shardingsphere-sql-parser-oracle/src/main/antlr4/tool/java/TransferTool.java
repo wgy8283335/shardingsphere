@@ -25,7 +25,7 @@ public class TransferTool {
             FileWriter writer = new FileWriter(outputFile, true);
             TransferRuleImplListener listener = new TransferRuleImplListener(writer);
             walker.walk(listener, tree);
-            writer.write(listener.getProperty(tree));
+            writer.write(listener.getG4Rule(tree));
             writer.write("\n");
             writer.flush();
             writer.close();

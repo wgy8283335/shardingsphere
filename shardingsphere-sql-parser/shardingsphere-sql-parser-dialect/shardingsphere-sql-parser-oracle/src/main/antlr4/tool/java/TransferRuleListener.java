@@ -41,6 +41,18 @@ public interface TransferRuleListener extends ParseTreeListener {
 	 */
 	void exitSQRule(TransferRuleParser.SQRuleContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code VERTICALRule}
+	 * labeled alternative in {@link TransferRuleParser#rules}.
+	 * @param ctx the parse tree
+	 */
+	void enterVERTICALRule(TransferRuleParser.VERTICALRuleContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code VERTICALRule}
+	 * labeled alternative in {@link TransferRuleParser#rules}.
+	 * @param ctx the parse tree
+	 */
+	void exitVERTICALRule(TransferRuleParser.VERTICALRuleContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code LBERule}
 	 * labeled alternative in {@link TransferRuleParser#rules}.
 	 * @param ctx the parse tree
@@ -64,6 +76,18 @@ public interface TransferRuleListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitLBEMultiRule(TransferRuleParser.LBEMultiRuleContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code SymbolRule}
+	 * labeled alternative in {@link TransferRuleParser#rules}.
+	 * @param ctx the parse tree
+	 */
+	void enterSymbolRule(TransferRuleParser.SymbolRuleContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code SymbolRule}
+	 * labeled alternative in {@link TransferRuleParser#rules}.
+	 * @param ctx the parse tree
+	 */
+	void exitSymbolRule(TransferRuleParser.SymbolRuleContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code LBTMultiRule}
 	 * labeled alternative in {@link TransferRuleParser#rules}.
@@ -156,6 +180,16 @@ public interface TransferRuleListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitKeyWords(TransferRuleParser.KeyWordsContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TransferRuleParser#symbols}.
+	 * @param ctx the parse tree
+	 */
+	void enterSymbols(TransferRuleParser.SymbolsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TransferRuleParser#symbols}.
+	 * @param ctx the parse tree
+	 */
+	void exitSymbols(TransferRuleParser.SymbolsContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link TransferRuleParser#rbtMulti}.
 	 * @param ctx the parse tree

@@ -51,6 +51,18 @@ public class TransferRuleBaseListener implements TransferRuleListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterVERTICALRule(TransferRuleParser.VERTICALRuleContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitVERTICALRule(TransferRuleParser.VERTICALRuleContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterLBERule(TransferRuleParser.LBERuleContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -70,6 +82,18 @@ public class TransferRuleBaseListener implements TransferRuleListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitLBEMultiRule(TransferRuleParser.LBEMultiRuleContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSymbolRule(TransferRuleParser.SymbolRuleContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSymbolRule(TransferRuleParser.SymbolRuleContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -166,6 +190,18 @@ public class TransferRuleBaseListener implements TransferRuleListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitKeyWords(TransferRuleParser.KeyWordsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSymbols(TransferRuleParser.SymbolsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSymbols(TransferRuleParser.SymbolsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
