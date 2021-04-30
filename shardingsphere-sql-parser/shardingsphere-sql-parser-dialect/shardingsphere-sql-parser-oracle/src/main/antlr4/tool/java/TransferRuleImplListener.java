@@ -158,7 +158,7 @@ public class TransferRuleImplListener extends TransferRuleBaseListener{
 
     @Override public void exitATRule(final TransferRuleParser.ATRuleContext ctx) {
         StringBuilder buf = new StringBuilder();
-        buf.append("AT_");
+        buf.append("AT_ ");
         buf.append(getProperty(ctx.rules()));
         setProperty(ctx, buf.toString());
     }
@@ -187,7 +187,7 @@ public class TransferRuleImplListener extends TransferRuleBaseListener{
         if (ctx.SQ_()!=null && ctx.SQ_().get(0)!=null && !Strings.isNullOrEmpty(ctx.SQ_().get(0).getText())) {
             buf.append(" SQ_ ");
         }
-        buf.append(ctx.children.get(1).getText());
+        buf.append(translateSymbol(ctx.children.get(1)));
         if (ctx.SQ_()!=null && ctx.SQ_().get(1)!=null && !Strings.isNullOrEmpty(ctx.SQ_().get(1).getText())) {
             buf.append(" SQ_ ");
         }
@@ -244,5 +244,40 @@ public class TransferRuleImplListener extends TransferRuleBaseListener{
         }
         return str;
     }
-    
+
+    private String translateSymbol(ParseTree symbol) {
+        switch (symbol.getText()) {
+            case "(": 
+                return "LP_";
+            case ")":
+                return "RP_";
+            case "{":
+                return "LBE_:";
+            case "}":
+                return "RBE_";
+            case "[":
+                return "LBT_";
+            case "]":
+                return "RBT_";
+            case ";":
+                return "SEMI_";
+            case ":":
+                return "COLON_";
+            case "...":
+                return "MLT_";
+            case ".":
+                return "DOT_";
+            case "|":
+                return "VERTICAL_BAR_";
+            case "=":
+                return "EQ_";
+            case ",":
+                return "COMMA_";
+            case "\\'":
+                return "SQ_";
+            case "@":
+                return "AT_";
+        }
+        return null;
+    }
 }

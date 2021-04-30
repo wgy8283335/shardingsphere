@@ -1,1 +1,16 @@
-DEFAULT DIRECTORY directory (LOCATION SQ_ LP_( SQ_ directory SQ_ : SQ_ SQ_ SQ_ SQ_ locationSpecifier SQ_ SQ_ SQ_ SQ_ )RP_ SQ_ )? (ACCESS PARAMETERS (BADFILE filename )? (LOGFILE filename )? (DISCARDFILE filename )? )? (REJECT LIMIT (integer | UNLIMITED ) )? 
+ALTER TABLE (schema DOT_ )? table 
+(memoptimizeReadClause )? 
+(memoptimizeWriteClause )? 
+(alterTableProperties 
+| columnClauses 
+| constraintClauses 
+| alterTablePartitioning 
+| alterExternalTable 
+| moveTableClause 
+| modifyToPartitioned 
+| modifyOpaqueType 
+| immutableTableClauses 
+| blockchainTableClauses )? 
+(enableDisableClause 
+| (ENABLE | DISABLE ) 
+(TABLE LOCK | ALL TRIGGERS | CONTAINER_MAP | CONTAINERS_DEFAULT ) )* ;

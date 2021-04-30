@@ -47,7 +47,6 @@ ALTER INDEX [ schema. ]index
     } ...
   | rebuild_clause
   | PARAMETERS ( 'ODCI_parameters' )
-               )
   | COMPILE
   | { ENABLE | DISABLE }
   | UNUSABLE [ ONLINE ] [ { DEFERRED | IMMEDIATE } INVALIDATION ]
